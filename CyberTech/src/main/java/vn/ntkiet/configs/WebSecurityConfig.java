@@ -1,4 +1,4 @@
-package vn.ntkiet.configs;
+package vn.ntkiet.Configs;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
