@@ -1,4 +1,4 @@
-package vn.ntkiet.DTO.request;
+package vn.ntkiet.Controller;
 
 import vn.ntkiet.DTO.request.updateProfile;
 import vn.ntkiet.DTO.response.manage_User;
