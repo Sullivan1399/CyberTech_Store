@@ -32,7 +32,7 @@ public class WebSecurityConfig {
                                 "/js/**",
                                 "/css/**",
                                 "/fonts/**",
-                                "/img/**",
+                                "/images/**",
                                 "/screenshot/**").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/staff/**").hasRole("STAFF")

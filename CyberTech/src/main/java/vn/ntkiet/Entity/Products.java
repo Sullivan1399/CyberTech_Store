@@ -20,10 +20,13 @@ public class Products
     private String product_type;
     private String brand;
     private BigDecimal cost;
-    private String detail;
     private int quantity;
     private String image_url;
     private int discount;
+    
+    @Lob // Đánh dấu trường này là Large Object
+    @Column(columnDefinition = "LONGTEXT") // Cụ thể hóa kiểu dữ liệu trong database
+    private String detail;
 
     @OneToMany(mappedBy = "product",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<Comments> commentsList=new ArrayList<>();

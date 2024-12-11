@@ -27,7 +27,7 @@
         <div th:each="billdetail: ${bill.list_billDetail}" class="card-body" style="margin-bottom:50px;">
             <div class="row">
                 <div class="col-sm-2 col-md-2">
-                    <img th:src="${billdetail.image_url}" class="img-responsive rounded-3" th:alt="${billdetail.productName}">
+                    <img th:src="@{'/images/' + ${billdetail.image_url}}" class="img-responsive rounded-3" th:alt="${billdetail.productName}">
                 </div>
                 <div class="col-sm-3 col-md-3">
                     <a class="lead fw-normal mb-2" th:href="@{'/web/detail_product/' + ${billdetail.productID}}" th:text="${billdetail.productName}" style="font-size: 16px;"></a>

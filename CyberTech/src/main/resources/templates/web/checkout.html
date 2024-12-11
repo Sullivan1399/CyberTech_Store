@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>H_Ecommerce Store</title>
+		<title>CyberTech Store</title>
 
  		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" >
 
@@ -98,7 +98,7 @@
 										<input type="hidden" th:field="*{billDetails[__${stat.index}__].productNewPrice}" />
 										<input type="hidden" th:field="*{billDetails[__${stat.index}__].quantity}" />
 										<div th:text="${billdetail.quantity} + 'x: ' + ${billdetail.productName}"></div>
-										<img th:src="${billdetail.image_url}" class="img-responsive rounded-3" th:alt="${billdetail.productName}"/>
+										<img th:src="@{'/images/' + ${billdetail.image_url}}" class="img-responsive rounded-3" th:alt="${billdetail.productName}"/>
 										<div th:text="${billdetail.formatted_newPrice} + 'đ'"></div>
 									</div>
 									<div class="order-col" style="margin-top: 30px">

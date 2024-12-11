@@ -7,9 +7,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 
 @Service
@@ -41,7 +38,7 @@ public class file_Service {
 			if (file.delete()) {
 				System.out.println("File deleted successfully");
 			}
-			return URL;
+			return fileName;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "Image couldn't upload, Something went wrong";

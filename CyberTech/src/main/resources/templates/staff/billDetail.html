@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-    <title>H_Ecommerce</title>
+    <title>CyberTech</title>
 
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
@@ -28,7 +28,7 @@
                 <div class="col-md-3">
                     <div class="header-logo">
                         <a href="/" class="logo">
-                            <img th:src="@{/img/logo.png}" alt="">
+                            <h2 style="color: white; margin:5px 0 5px 0">CyberTech</h2>
                         </a>
                     </div>
                 </div>
@@ -69,7 +69,7 @@
                                         <tr>
                                             <td th:text="${billdetail.ID}"></td>
                                             <td>
-                                                <img th:src="${billdetail.image_url}" th:alt="${billdetail.productName}"  style="width: 200px; height: 150px; object-fit: contain; border: 1px solid #ddd; padding: 5px;">
+                                                <img th:src="@{'/images/' + ${billdetail.image_url}}" th:alt="${billdetail.productName}"  style="width: 200px; height: 150px; object-fit: contain; border: 1px solid #ddd; padding: 5px;">
                                             </td>
                                             <td th:text="${billdetail.productName}"></td>
                                             <td th:text="${billdetail.quantity}"></td>

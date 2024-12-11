@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" th:href="@{/css/style.css}"/>
-    <title>H_Ecommerce Store</title>
+    <title>CyberTech Store</title>
 </head>
 <body>
     <header th:replace="~{fragment/navbar_home.html :: navbar_home}">
@@ -35,7 +35,7 @@
                                         <input class="product-checkbox" type="checkbox" th:value="${cart.cartID}" name="selectedCartIDs">
                                     </div>
                                     <div class="col-sm-2 col-md-2">
-                                        <img th:src="${cart.image_url}" class="img-responsive rounded-3" th:alt="${cart.productName}">
+                                        <img th:src="@{'/images/' + ${cart.image_url}}" class="img-responsive rounded-3" th:alt="${cart.productName}">
                                     </div>
                                     <div class="col-sm-3 col-md-3">
                                         <a class="lead fw-normal mb-2" th:href="@{'/web/detail_product/' + ${cart.productID}}" th:text="${cart.productName}" style="font-size: 16px;"></a>

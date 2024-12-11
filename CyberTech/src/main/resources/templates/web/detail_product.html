@@ -5,7 +5,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 		<meta charset="UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>H_Ecommerce Store</title>
+		<title>CyberTech Store</title>
 
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700">
 		<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
@@ -31,7 +31,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 						<div class="col-md-5" style="width: 40%">
 							<div id="product-main-img">
 								<div class="product-preview">
-									<img th:src="*{image_url}" th:alt="${detail_Product.getProduct_name()}">
+									<img th:src="@{'/images/' + *{image_url}}" th:alt="${detail_Product.getProduct_name()}">
 								</div>
 							</div>
 						</div>
@@ -170,7 +170,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 										<!-- Review Form -->
 										<div class="col-md-3" style="clear: both;width: 50%;justify-content: center">
 											<div id="review-form" >
-												<!--/*@thymesVar id="postComment" type="com.h_ecommerce_store.DTO.request.postComment"*/-->
+												<!--/*@thymesVar id="postComment" type="vn.ntkiet.DTO.request.postComment"*/-->
 												<form th:if="${postComment != null && #authorization.expression('isAuthenticated()')}" class="review-form" th:action="@{/user/postComment}"
 													  th:object="${postComment}" method="POST" id="commentForm">
 													<input type="hidden" th:field="*{productID}"/>
@@ -234,7 +234,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 						<a th:href="@{'/web/detail_product/' + ${relatedProduct.productID}}" style="text-decoration: none; color: inherit;">
 							<div class="product">
 								<div class="product-img">
-									<img th:src="${relatedProduct.image_url}" th:alt="${relatedProduct.product_name}">
+									<img th:src="@{'/images/' + ${relatedProduct.image_url}}" th:alt="${relatedProduct.product_name}">
 									<div class="product-label">
 										<span class="sale" th:text="'-'+${relatedProduct.discount}+'%'"></span>
 									</div>

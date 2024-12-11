@@ -16,7 +16,7 @@
                 <div class="col-md-3">
                     <div class="header-logo">
                         <a href="/" class="logo">
-                            <img th:src="@{/img/logo.png}" alt="">
+                            <h2 style="color: white; margin:5px 0 5px 0">CyberTech</h2>
                         </a>
                     </div>
                 </div>
@@ -76,7 +76,7 @@
                                    onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])">
                             <input type="hidden" th:field="*{image_url}" th:value="${product.image_url}">
                             <br>
-                            <img id="blah" width="400" height="350" th:src="${product.image_url}">
+                            <img id="blah" width="400" height="350" th:src="@{'/images/' + ${product.image_url}}">
                         </div>
                         <div style="display: flex;">
                             <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-lg btn-block" style="height: 50px;margin-top: 8px">
