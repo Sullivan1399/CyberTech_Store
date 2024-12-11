@@ -1,0 +1,158 @@
+<!-- HEADER -->
+<header th:fragment="navbar_home">
+    <!-- TOP HEADER -->
+    <div id="top-header">
+        <div class="container">
+            <ul class="header-links pull-right">
+                <li sec:authorize="isAnonymous()">
+                    <a th:href="@{/login}">
+                        <i class="fa fa-user-o"></i> Đăng nhập
+                    </a>
+                </li>
+                <li><a th:if="${role} =='ROLE_ADMIN'" th:href="@{/admin/crudProducts}">Quản lí sản phẩm</a></li>
+                <li><a th:if="${role} =='ROLE_ADMIN'" th:href="@{/admin/user}">Quản lí người dùng</a></li>
+                <li><a th:if="${role} =='ROLE_STAFF'" th:href="@{/staff/bill}">Quản lí hóa đơn</a></li>
+                <li sec:authorize="isAuthenticated()" class="dropdown">
+                    <a th:if="${role} !='ROLE_ADMIN'" href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-user-o"></i>Thông tin cá nhân
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a th:if="${role} =='ROLE_USER'" th:href="@{/user/form_changePassword}" style="color: black;">Đổi mật khẩu</a>
+                            <a th:if="${role} =='ROLE_STAFF'" th:href="@{/staff/form_changePassword}" style="color: black;">Đổi mật khẩu</a>
+                        </li>
+
+                        <li>
+                            <a th:if="${role} =='ROLE_USER'" th:href="@{/user/formProfile}" style="color: black;"> Hồ sơ của bạn</a>
+                            <a th:if="${role} =='ROLE_STAFF'" th:href="@{/staff/formProfile}" style="color: black;"> Hồ sơ của bạn</a>
+                        </li>
+                    </ul>
+                    <form th:action="@{/logout}" method="post" style="display: inline">
+                        <button type="submit" style="color: white ;background: none; border: none";>
+                            Đăng xuất
+                            <a class="fa fa-sign-out"></a>
+                        </button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- /TOP HEADER -->
+
+    <!-- MAIN HEADER -->
+    <div id="header">
+        <!-- container -->
+        <div class="container">
+            <!-- row -->
+            <div class="row">
+                <!-- LOGO -->
+                <div class="col-md-3">
+                    <div class="header-logo">
+                        <a href="/" class="logo">
+                            <img th:src="@{/img/logo.png}" alt="">
+                        </a>
+                    </div>
+                </div>
+                <!-- /LOGO -->
+
+                <!-- SEARCH BAR -->
+                <div class="col-md-6">
+                    <div class="header-search">
+                        <form th:action="@{/}" method="GET">
+                            <input id="keyword" class="input" name="keyword" th:value="${keyword}" placeholder="Tìm kiếm">
+                            <button class="search-btn" type="button" onclick="searchProduct()">Search</button>
+                        </form>
+                    </div>
+                </div>
+                <!-- /SEARCH BAR -->
+
+                <!-- ACCOUNT -->
+                <div class="col-md-3 clearfix">
+                    <div class="header-ctn">
+                        <div th:if="${role}=='ROLE_USER'" class="dropdown">
+                            <a th:href="@{/user/Bill}">
+                                <i class="fa fa-file-text"></i>
+                                <span>Hóa đơn</span>
+                                <div th:if="${number_bill}!=null" class="qty" th:text="${number_bill} "></div>
+                            </a>
+                        </div>
+                        <!-- Cart -->
+                        <div class="dropdown" th:if="${role} =='ROLE_USER'">
+                            <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                                <i class="fa fa-shopping-cart"></i>
+                                <span>Giỏ hàng</span>
+                                <div th:if="${number_type}!=null" class="qty" th:text="${number_type} "></div>
+                            </a>
+                            <div class="cart-dropdown">
+                                <div class="cart-list">
+                                    <div class="product-widget" th:each="cart: ${list_cart}">
+                                        <div class="product-img">
+                                            <img th:src="${cart.image_url}" th:alt="${cart.productName}">
+                                        </div>
+                                        <div class="product-body">
+                                            <h3 class="product-name"><a th:href="@{'/web/detail_product/' + ${cart.productID}}" th:text="${cart.productName}"></a></h3>
+                                            <h4 class="product-price">
+                                                <span class="qty" th:text="'Số lượng '+${cart.quantity}+' Tổng '+${cart.formatted_newPrice}"></span>
+                                            </h4>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="cart-summary">
+                                    <a class th:href="@{/user/shoppingCart}">
+                                        <small>Xem thêm sản phẩm</small>
+                                    </a>
+                                    <br>
+                                    <small th:text="${number_type} ==null ? 'Đã chọn 0 sản phẩm' :'Đã chọn '+ ${number_type}+' sản phẩm'"></small>
+                                </div>
+                                <div class="cart-btns">
+                                    <a th:href="@{/user/shoppingCart}">Xem giỏ hàng
+                                        <i class="fa fa-arrow-circle-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /Cart -->
+
+                        <!-- Menu Toogle -->
+                        <div class="menu-toggle">
+                            <a href="#">
+                                <i class="fa fa-bars"></i>
+                                <span>Menu</span>
+                            </a>
+                        </div>
+                        <!-- /Menu Toogle -->
+                    </div>
+                </div>
+                <!-- /ACCOUNT -->
+            </div>
+            <!-- row -->
+        </div>
+        <!-- container -->
+    </div>
+    <!-- /MAIN HEADER -->
+
+    <!-- NAVIGATION -->
+    <nav id="navigation">
+        <!-- container -->
+        <div class="container">
+            <!-- responsive-nav -->
+            <div id="responsive-nav">
+                <!-- NAV -->
+                <ul class="main-nav nav navbar-nav">
+                    <li th:classappend="${url == 'home'} ? 'active'">
+                        <a th:href="@{/(url='home')}">Trang chủ</a>
+                    </li>
+                    <li th:classappend="${url == 'discount'} ? 'active'">
+                        <a th:href="@{/(url='discount')}">Giảm giá</a>
+                    </li>
+                </ul>
+                <!-- /NAV -->
+            </div>
+            <!-- /responsive-nav -->
+        </div>
+        <!-- /container -->
+    </nav>
+    <!-- /NAVIGATION -->
+</header>
+<!-- /HEADER -->

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Register</title>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css" rel="stylesheet">
+	<link th:href="@{/css/custom-login.css}" rel="stylesheet">
+</head>
+<body>
+<div class="register-wrapper">
+	<!-- Phần bên trái -->
+	<div class="info-section register-info">
+		<div class="info-content">
+			<h1>Welcome to Our Store!</h1>
+			<p>Join us today to explore amazing products and exclusive deals.</p>
+		</div>
+	</div>
+
+	<!-- Phần bên phải -->
+	<div class="form-card">
+		<h2 class="text-center mb-4">Register</h2>
+		<form th:action="@{/web/register}" th:object="${register}" method="POST">
+			<div class="form-group">
+				<label for="name">Họ và tên</label>
+				<input type="text" id="name" th:field="*{name}" class="form-control" placeholder="Nhập họ và tên">
+				<div th:if="${#fields.hasErrors('name')}" class="text-danger">
+					<small th:errors="*{name}" style="color: red"></small>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="form-group half-width">
+					<label for="cities">Tỉnh/Thành phố</label>
+					<select id="cities" class="form-select form-control-lg">
+						<option value="" selected>Tỉnh/thành phố</option>
+					</select>
+					<input type="hidden" id="cityName" th:field="*{city}">
+					<div th:if="${#fields.hasErrors('city')}" class="text-danger">
+						<small th:errors="*{city}" style="color: red"></small>
+					</div>
+				</div>
+
+				<div class="form-group half-width">
+					<label for="districts">Quận/Huyện</label>
+					<select id="districts" class="form-select form-control-lg">
+						<option value="" selected>Quận/huyện</option>
+					</select>
+					<input type="hidden" id="districtName" th:field="*{district}">
+					<div th:if="${#fields.hasErrors('district')}" class="text-danger">
+						<small th:errors="*{district}" style="color: red"></small>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="wards">Phường/Xã</label>
+				<select id="wards" class="form-select">
+					<option value="" selected>Phường/xã</option>
+				</select>
+				<input type="hidden" id="wardName" th:field="*{ward}">
+			</div>
+
+			<div class="form-group">
+				<label for="address">Số nhà, tên đường</label>
+				<input type="text" id="address" th:field="*{houseNo}" class="form-control" placeholder="Nhập số nhà, tên đường">
+			</div>
+
+			<div class="form-group">
+				<label for="phone">Số điện thoại</label>
+				<input type="text" id="phone" th:field="*{phone}" class="form-control" placeholder="Nhập số điện thoại">
+				<div th:if="${#fields.hasErrors('phone')}" class="text-danger">
+					<small th:errors="*{phone}" style="color: red"></small>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="form-group half-width">
+					<label for="username">Email</label>
+					<input type="email" id="username" th:field="*{username}" class="form-control" placeholder="Nhập email">
+					<div th:if="${#fields.hasErrors('username')}" class="text-danger">
+						<small th:errors="*{username}" style="color: red"></small>
+					</div>
+				</div>
+
+				<div class="form-group half-width">
+					<label for="password">Mật khẩu</label>
+					<input type="password" id="password" th:field="*{password}" class="form-control" placeholder="Nhập mật khẩu">
+					<div th:if="${#fields.hasErrors('password')}" class="text-danger">
+						<small th:errors="*{password}" style="color: red"></small>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="confirmPassword">Xác nhận mật khẩu</label>
+				<input type="password" id="confirmPassword" th:field="*{confirmPassword}" class="form-control" placeholder="Nhập lại mật khẩu">
+				<div th:if="${#fields.hasErrors('confirmPassword')}" class="text-danger">
+					<small th:errors="*{confirmPassword}" style="color: red"></small>
+				</div>
+			</div>
+
+			<button type="submit" class="btn btn-primary btn-lg btn-block">Register</button>
+			<p class="text-center mt-3">Already a member? <a th:href="@{/web/login}">Login</a></p>
+		</form>
+	</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+<script th:src="@{/js/register.js}"></script>
+</body>
+</html>

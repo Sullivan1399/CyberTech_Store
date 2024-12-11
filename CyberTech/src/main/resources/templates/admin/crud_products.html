@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>CRUD Product</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700">
+    <style type="text/css">
+        body {
+            margin-top: 20px;
+            background: #f8f8f8;
+        }
+        .table-responsive
+        {
+            overflow-x: auto;
+            width: 100%;
+            -webkit-overflow-scrolling: touch;
+        }
+        .table img {
+            max-width: 100% !important;
+            height: auto !important;
+            object-fit: contain;
+        }
+
+        @media (max-width: 576px)
+        {
+            .modal-dialog {
+                max-width: 90%;
+                margin: 1.75rem auto;
+            }
+        }
+    </style>
+
+</head>
+<body>
+    <div id="header">
+        <!-- container -->
+        <div class="container">
+            <!-- row -->
+            <div class="row">
+                <!-- LOGO -->
+                <div class="col-md-3">
+                    <div class="header-logo">
+                        <a href="/" class="logo">
+                            <img th:src="@{/img/logo.png}" alt="">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row flex-lg-nowrap">
+            <!-- Sidebar -->
+            <nav class="col-12 col-lg-3 mb-3" style="width:200px">
+                <div class="card p-3">
+                    <div class="e-navlist e-navlist--active-bg">
+                        <ul class="nav flex-column" style="width:200px" >
+                            <li class="nav-item" style="width:200px">
+                                <a class="nav-link px-2" th:href="@{/admin/crudProducts}">
+                                    <i class="fa fa-fw fa-th mr-1"></i><span>CRUD</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link px-2 active" th:href="@{/admin/dashboard}">
+                                    <i class="fa fa-fw fa-bar-chart mr-1"></i><span>Dashboard</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+            <main class="col-12 col-lg-9">
+                <div class="row flex-lg-nowrap">
+                    <div class="col mb-3">
+                        <div class="e-panel card">
+                            <div class="card-body">
+                                <div class="card-title">
+                                    <h6 class="mr-2"><span>Danh sách sản phẩm</span></h6>
+                                </div>
+                                <div class="e-table">
+                                    <div class="table-responsive table-lg mt-3">
+                                        <table class="table table-bordered table-hover" >
+                                            <thead>
+                                            <tr>
+                                                <th>Hình ảnh</th>
+                                                <th class>Tên</th>
+                                                <th class="sortable">Giá</th>
+                                                <th>Loại sản phẩm</th>
+                                                <th>Giảm giá</th>
+                                                <th>Số lượng</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            <tr th:each="p : ${listProducts}">
+                                                <td><img th:src="${p.image_url}" alt=""  style="width: 200px; height: 150px; object-fit: contain; border: 1px solid #ddd; padding: 5px;"></td>
+                                                <td th:text="${p.getProduct_name()}"></td>
+                                                <td th:text="${p.getCost()}"></td>
+                                                <td th:text="${p.getProduct_type()}"></td>
+                                                <td th:text="${p.getDiscount()}"></td>
+                                                <td th:text="${p.getQuantity()}"></td>
+                                                <td class="text-center align-middle">
+                                                    <div class="btn-group align-top">
+                                                        <a th:href="@{/admin/editProduct/{id}(id=${p.getID()})}" class="btn btn-sm btn-outline-secondary badge">Edit</a>
+                                                        <form th:action="@{/admin/deleteProduct}" th:id="'deleteProduct_'+${p.ID}" method="POST" style="display:inline;font-size: 14px">
+                                                            <input type="hidden" name="productID" th:value="${p.ID}" th:data-id="${p.ID}">
+                                                            <button type="button" class="btn btn-sm btn-outline-secondary badge" onclick="confirmDelete(event,)">
+                                                                <i class="fa fa-trash"></i>
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="d-flex justify-content-center">
+                                        <ul class="pagination mt-3 mb-0">
+                                            <a th:href="@{${requestURI}(page=${currentPage - 1})}"
+                                               th:if="${currentPage > 1}">&laquo; Previous</a>
+                                            <li class="page-item" th:each="i : ${#numbers.sequence(1, totalPages)}">
+                                                <a class="page-link" th:href="@{${requestURI}(page=${i})}"
+                                                   th:text="${i}"
+                                                   th:classappend="${i == currentPage} ? 'active' : ''" >2</a>
+                                            </li>
+                                            <a th:href="@{${requestURI}(page=${currentPage + 1})}"
+                                               th:if="${currentPage < totalPages}">Next &raquo;</a>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div >
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="text-center px-xl-3">
+                                    <a th:href="@{/admin/createProducts}" class="btn btn-success btn-block" type="button">Add Product</a>
+                                </div>
+                                <hr class="my-3">
+                                <div class="e-navlist e-navlist--active-bold">
+                                    <ul class="nav flex-column">
+                                        <li class="nav-item active">
+                                            <a th:href="@{/admin/crudProducts}" class="nav-link"><span>Tất cả</span>&nbsp;<small th:text="'('+${countAll}+')'">&nbsp;</small></a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a th:href="@{/admin/crudProducts/inStock}" class="nav-link"><span>Còn hàng</span>&nbsp;<small th:text="'('+${count_inStock}+')'">&nbsp;</small></a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a th:href="@{/admin/crudProducts/outOfStock}" class="nav-link"><span>Hết hàng</span>&nbsp;<small th:text="'('+${count_outOfStock}+')'">&nbsp;</small></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <hr class="my-3">
+                                <div>
+                                    <form th:action="@{/admin/searchByName}" method="get">
+                                        <div class="form-group">
+                                            <label>Tìm kiếm theo tên:</label>
+                                            <div>
+                                                <input class="form-control w-100" th:name="keyword" type="text" placeholder="Tên sản phẩm">
+                                            </div>
+                                        </div>
+
+                                        <button type="submit" class="btn btn-primary">Search</button>
+                                    </form>
+                                    <form th:action="@{/admin/searchByProductType}" method="get">
+                                        <div class="form-group">
+                                            <label>Tìm kiếm theo loại:</label>
+                                            <div>
+                                                <select class="form-control w-100" th:name="productType">
+                                                    <option th:each="type, iter : ${listType}" th:value="${type}" th:text="${type}"
+                                                            th:selected="${iter.index == 0}"></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS và jQuery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.5.2/bootbox.min.js"></script>
+    <script th:src="@{/js/crud_Product.js}"></script>
+</body>
+</html>
