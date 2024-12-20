@@ -22,7 +22,6 @@ public class WebSecurityConfig {
                         , "/user/updateCart/**"
                         ,"/user/deleteCart/**"
                         ,"/user/updateStatus/**"
-                        ,"/staff/deleteBill/**"
                         ,"/admin/changeRole/**"))
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers(

@@ -23,7 +23,7 @@
             </div>
         </div>
 
-        <!--/*@thymesVar id="list_billDetail" type="com.h_ecommerce_store.DTO.response.listBillDetail"*/-->
+        <!--/*@thymesVar id="list_billDetail" type="vn.ntkiet.DTO.response.listBillDetail"*/-->
         <div th:each="billdetail: ${bill.list_billDetail}" class="card-body" style="margin-bottom:50px;">
             <div class="row">
                 <div class="col-sm-2 col-md-2">
@@ -37,6 +37,7 @@
                 </div>
                 <div class="col-sm-3 col-md-2 pull-right">
                     <h5 class="mb-0" th:text="${billdetail.formattedPrice} + 'đ'"></h5>
+                    <a style="background-color:#FFC107; border-color: #FFC107;" class="btn btn-primary btn-md" th:href="@{'/web/detail_product/' + ${billdetail.productID} + '#tab2'}">Đánh giá</a>
                 </div>
             </div>
         </div>
@@ -46,6 +47,7 @@
         <div class="reorder-button">
             <a class="btn btn-primary btn-md" th:href="@{'/user/reorder/' + ${bill.billID}}">Mua lại</a>
         </div>
+        
         <form th:if="${bill.confirm}==0" th:action="@{/user/cancelBill}" method="POST" style="display: inline-block; float: right;"
               id="cancelForm">
             <input type="hidden" th:value="${bill.billID}" th:name="billID">

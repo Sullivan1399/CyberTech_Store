@@ -34,6 +34,26 @@ public class bill_Controller
     @GetMapping("/user/form_BillDetail")
     public String getListBill(@RequestParam("selectedCartIDs") List<Integer> selectedCartIds, Model model)
     {
+    	String username=account_service.getLoggedUserName();
+    	Users user= user_service.getCustomer(username);
+    	String name=user.getName();
+    	model.addAttribute("name",name);
+	    String phone=user.getPhone();
+	    model.addAttribute("phone",phone);
+	    String[] address=user.getAddress().split(", ");
+	    String city=address[0];
+	    model.addAttribute("cityName",city);
+	    String district=address[1];
+	    model.addAttribute("districtName",district);
+	    String ward=address[2];
+	    model.addAttribute("wardName",ward);
+	    String houseNo="";
+	    if(address.length>3)
+	    {
+	        houseNo=address[3];
+	    }
+	    model.addAttribute("houseNo",houseNo);
+    
         load_dataNavbar.load_Navbar(model);
         List<checkout_BillDetail> list_BillDetail=new ArrayList<>();
         for(Integer cartID:selectedCartIds)
@@ -53,7 +73,14 @@ public class bill_Controller
         return "/web/checkout";
     }
     @PostMapping("/user/insertBill")
-    public String insertBill(@Valid @ModelAttribute("checkout_Bill") checkout_Bill checkout_bill, BindingResult result)
+    public String insertBill(@Valid @ModelAttribute("checkout_Bill") checkout_Bill checkout_bill
+    		, BindingResult result,
+					    		@RequestParam(value = "name") String name,
+					    		@RequestParam(value = "phone") String phone,
+					    		@RequestParam(value = "cityName") String city,				 
+					            @RequestParam(value = "districtName") String district,
+					            @RequestParam(value = "wardName") String ward,
+					            @RequestParam(value = "houseNo") String houseNo)
     {
         if(result.hasErrors())
         {
@@ -69,15 +96,12 @@ public class bill_Controller
         }
         String username=account_service.getLoggedUserName();
         Users customer= user_service.getCustomer(username);
-        String cus_name=checkout_bill.getName();
+//        String cus_name=name;
         BigDecimal total=checkout_bill.getTotal();
 
         int status=checkout_bill.getStatus();
-        String address=checkout_bill.getCity()+", "
-                +checkout_bill.getDistrict()+", "
-                +checkout_bill.getWard()+", "
-                +checkout_bill.getHouseNo();
-        String phone=checkout_bill.getPhone();
+        String address=city+", "+district+", "+ward+", "+houseNo;
+//        String phoneNum=phone;
         List<checkout_BillDetail> checkout_BillDetails=checkout_bill.getBillDetails();
         List<BillDetails> billDetails=new ArrayList<>();
         for(checkout_BillDetail billDetail:checkout_BillDetails)
@@ -86,9 +110,9 @@ public class bill_Controller
             BillDetails bill_detail=new BillDetails(product,billDetail.getProductNewPrice(),billDetail.getQuantity());
             billDetails.add(bill_detail);
         }
-        Bills bill=new Bills(customer,cus_name,address,phone,total,status,0);
+        Bills bill=new Bills(customer,name,address,phone,total,status,0);
         bill_service.insertBill(bill,billDetails);
-        return "redirect:/user/shoppingCart";
+        return "redirect:/user/Bill";
     }
     @GetMapping("/user/Bill")
     public String getBill(Model model)

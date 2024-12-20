@@ -122,13 +122,4 @@ public class Manage_bill
         bill_service.confirmBill(billID);
         return "redirect:/staff/bill";
     }
-    @PostMapping("/staff/deleteBill")
-    public String deleteBill(@RequestParam("selectedBillIDs") List<Integer> selectedBillIds)
-    {
-        for (Integer billID : selectedBillIds)
-        {
-            bill_service.deleteBillByID(billID);
-        }
-        return "redirect:/staff/bill";
-    }
 }

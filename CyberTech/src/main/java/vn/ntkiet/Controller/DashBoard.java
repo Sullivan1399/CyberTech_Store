@@ -40,12 +40,12 @@ public class DashBoard
         String formattedPrice=decimalFormat.format(totalRevenue);
         model.addAttribute("totalRevenue",formattedPrice);
 
-        Long totalCart=cart_service.totalCart();
-        if(totalCart==null)
+        Long NotReceivedBill=bill_service.CountBill_NotReceive();
+        if(NotReceivedBill==null)
         {
-            totalCart=0L;
+        	NotReceivedBill=0L;
         }
-        model.addAttribute("totalCart",totalCart);
+        model.addAttribute("NotReceivedBill",NotReceivedBill);
 
         Long totalCustomer= user_service.totalCustomers();
         if(totalCustomer==null)

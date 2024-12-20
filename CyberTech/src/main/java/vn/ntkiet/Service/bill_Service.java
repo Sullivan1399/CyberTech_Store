@@ -109,11 +109,6 @@ public class bill_Service
             bill_repository.delete(existBill.get());
         }
     }
-    public void deleteBillByID(int billID)
-    {
-        Optional<Bills> existBill=bill_repository.findById(billID);
-        existBill.ifPresent(bill_repository::delete);
-    }
     public Double totalRevenue()
     {
         return bill_repository.getTotalCost();
@@ -127,6 +122,10 @@ public class bill_Service
     public Long CountBill_NotConfirmOrNotReceive(String email)
     {
         return bill_repository.CountBill_NotConfirmOrNotReceive(email);
+    }
+    public Long CountBill_NotReceive()
+    {
+        return bill_repository.CountBill_NotReceive();
     }
     public Page<Bills> getBillsByCusName(String name, List<Integer> status, List<Integer> confirm,String timeStart,String timeEnd, int page, int size)
     {

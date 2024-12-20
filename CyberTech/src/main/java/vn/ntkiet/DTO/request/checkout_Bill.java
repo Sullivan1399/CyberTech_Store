@@ -14,22 +14,9 @@ import java.util.List;
 @Setter
 public class checkout_Bill
 {
-    @NotBlank(message = "Họ và tên không được để trống")
-    private String name;
-    @NotBlank(message = "Tỉnh/Thành phố không được để trống")
-    private String city;
-    @NotBlank(message = "Quận/Huyện không được để trống")
-    private String district;
-
-    private String ward;
-
-    private String houseNo;
-    @NotBlank(message = "Số điện thoại không được để trống")
-    @Pattern(regexp = "^\\d{10}$", message = "Số điện thoại phải đủ 10 số")
-    private String phone;
     private List<checkout_BillDetail> billDetails;
     @NotNull(message = "Hãy chọn phương thức thanh toán")
-    private Integer status;
+    private Integer status = 1;
     private BigDecimal total;
     private static final DecimalFormat decimalFormat = new DecimalFormat("#,###");
     private String formatted_price;

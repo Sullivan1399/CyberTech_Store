@@ -120,12 +120,11 @@
                                         </form>
                                     </div>
                                     <div class="content table-responsive table-full-width">
-                                        <form id="deleteBillForm" method="POST" th:action="@{/staff/deleteBill}">
+                                        <form id="deleteBillForm">
                                             <table class="table table-striped">
                                                 <thead>
                                                 <tr>
-                                                    <th></th>
-                                                    <th>ID</th>
+                                                    <th style="padding-left: 20px">ID</th>
                                                     <th>Tên</th>
                                                     <th>Tổng</th>
                                                     <th>Ngày mua</th>
@@ -138,11 +137,7 @@
                                                 </thead>
                                                 <tbody th:each="bill : ${listBills}">
                                                 <tr class="bill-row" th:data-bill-id="${bill.billID}">
-                                                    <td class="col-sm-1 col-md-1">
-                                                        <input class="bill-checkbox" type="checkbox" th:value="${bill.billID}" name="selectedBillIDs"
-                                                               th:data-bill-receive="${bill.receive_date}">
-                                                    </td>
-                                                    <td th:text="${bill.billID}"></td>
+                                                    <td style="padding-left: 25px" th:text="${bill.billID}"></td>
                                                     <td th:text="${bill.cus_name}"></td>
                                                     <td th:text="${bill.formattedPrice} + 'đ'"></td>
                                                     <td th:text="${bill.formattedPurchase_date}"></td>
@@ -153,10 +148,7 @@
                                                     <td th:text="${bill.receive_date == null ? 'Chưa nhận hàng' : bill.formattedReceive_date}"></td>
                                                 </tr>
                                                 </tbody>
-                                            </table>
-                                            <div style="float: right; margin-top: 30px">
-                                                <button class="btn btn-danger" type="button" onclick="confirmDeleteBill(event)">Xóa hóa đơn</button>
-                                            </div>
+                                            </table>                                          
                                         </form>
                                     </div>
                                 </div>

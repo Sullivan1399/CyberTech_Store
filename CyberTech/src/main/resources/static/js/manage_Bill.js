@@ -77,40 +77,6 @@ function getCheckBox(source)
     }
     return true;
 }
-function confirmDeleteBill(event)
-{
-    event.preventDefault();
-    if (!getCheckBox(document.getElementById("deleteBillForm")))
-    {
-        return;
-    }
-    bootbox.confirm({
-        title: "Xác nhận xóa đơn hàng",
-        message: "Bạn có muốn xóa các hóa đơn này không",
-        backdrop: false,
-        buttons:
-            {
-                cancel:
-                    {
-                        label: '<i class="fa fa-times"></i> Không'
-                    },
-                confirm:
-                    {
-                        label: '<i class="fa fa-check"></i> Xác nhận'
-                    }
-            },
-        callback: function (result)
-        {
-            if (result)
-            {
-                document.getElementById("deleteBillForm").submit();
-            }
-        }
-    }).on('shown.bs.modal', function()
-    {
-        $(this).find('.modal-dialog').css("max-width","40%");
-    });
-}
 function searchBill()
 {
     var cus_name = document.getElementById('searchInput').value;
@@ -169,6 +135,18 @@ function searchBill()
         return false;
     }
     window.location.href = url.pathname + '?' + params.toString();
+}
+function paymentSuccess() {
+    bootbox.alert({
+        title: "Thông báo",
+        message: "Bạn đã thanh toán thành công! Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi.",
+        backdrop: false,        
+        callback: function() {
+        	document.getElementById("paymentForm").submit();
+        }
+    }).on('shown.bs.modal', function() {
+        $(this).find('.modal-dialog').css('max-width', '40%');
+    });
 }
 document.addEventListener('DOMContentLoaded', function()
 {

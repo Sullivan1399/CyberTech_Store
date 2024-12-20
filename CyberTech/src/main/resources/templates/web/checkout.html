@@ -33,51 +33,51 @@
 						<div class="section-title">
 							<h3 class="title">Thông tin đơn hàng</h3>
 						</div>
-						<form th:action="@{/user/insertBill}" th:object="${checkout_Bill}" method="POST">
+						<form id="paymentForm" th:action="@{/user/insertBill}" th:object="${checkout_Bill}" method="POST">
 							<div class="col-md-5">
-
+<!-- 
 								<div th:if="${#fields.hasErrors('name')}" style="color: red" class="error">
-									<small th:errors="*{name}"></small>
-								</div>
+									<small th:errors="${name}"></small>
+								</div> -->
 								<div class="form-group" style="margin-bottom: 30px">
-									<input class="input" th:field="*{name}" placeholder="Họ và tên" required>
+									<input class="input" id="name" name="name" th:value="${name}" placeholder="Họ và tên"required >
 								</div>
-								<div th:if="${#fields.hasErrors('city')}" style="color: red" class="error">
-									<small th:errors="*{city}"></small>
-								</div>
+							<!-- 	<div th:if="${#fields.hasErrors('cityName')}" style="color: red" class="error">
+									<small th:errors="${cityName}"></small>
+								</div> -->
 								<div class="mb-4" style="margin-bottom: 30px">
 									<select data-mdb-select-init class="form-control form-control-lg" id="cities" required>
 										<option value="" selected>Tỉnh/Thành phố</option>
 									</select>
-									<input type="hidden" id="cityName" th:field="*{city}">
+									<input type="hidden" id="cityName" name="cityName" th:value="${cityName}">
 								</div>
 
-								<div th:if="${#fields.hasErrors('district')}" style="color: red" class="error">
-									<small th:errors="*{district}"></small>
-								</div>
+								<!-- <div th:if="${#fields.hasErrors('districtName')}" style="color: red" class="error">
+									<small th:errors="${districtName}"></small>
+								</div> -->
 								<div class="mb-4" style="margin-bottom: 30px">
 									<select data-mdb-select-init class="form-control form-control-lg" id="districts" required>
 										<option value="" selected>Quận/Huyện</option>
 									</select>
-									<input type="hidden" id="districtName" th:field="*{district}">
+									<input type="hidden" id="districtName" name="districtName" th:value="${districtName}">
 								</div>
 
 								<div class="mb-4" style="margin-bottom: 30px">
 									<select data-mdb-select-init class="form-control form-control-lg" id="wards">
 										<option value="" selected>Phường/Xã</option>
 									</select>
-									<input type="hidden" id="wardName" th:field="*{ward}">
+									<input type="hidden" id="wardName" name="wardName" th:value="${wardName}">
 								</div>
 
 								<div class="form-group" style="margin-bottom: 30px">
-									<input class="input" th:field="*{houseNo}" placeholder="Số nhà, Tên đường">
+									<input class="input" id="houseNo" name="houseNo" th:value="${houseNo}" placeholder="Số nhà, Tên đường">
 								</div>
 
-								<div th:if="${#fields.hasErrors('phone')}" style="color: red" class="error">
-									<small th:errors="*{phone}"></small>
-								</div>
+								<!-- <div th:if="${#fields.hasErrors('phone')}" style="color: red" class="error">
+									<small th:errors="${phone}"></small>
+								</div> -->
 								<div class="form-group">
-									<input class="input" th:field="*{phone}" placeholder="Số diện thoại" required>
+									<input class="input" id="phone" name="phone" th:value="${phone}" placeholder="Số diện thoại" required>
 								</div>
 							</div>
 							<!-- Order Details -->
@@ -131,9 +131,7 @@
 										</div>
 									</div>
 								</div>
-								<button class="primary-btn order-submit" type="submit" style="float:right">
-									Thanh toán
-								</button>
+								<button class="btn btn-primary" type="button" onclick="paymentSuccess()">Thanh toán</button>
 							</div>
 								<!-- /Order Details -->
 						</form>
@@ -155,5 +153,6 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.5.2/bootbox.min.js"></script>
 		<script th:src="@{/js/register.js}"></script>
 		<script th:src="@{/js/main.js}"></script>
+		<script th:src="@{/js/manage_Bill.js}"></script>
 	</body>
 </html>

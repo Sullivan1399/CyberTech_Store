@@ -28,4 +28,6 @@ public interface Bill_Repository extends JpaRepository<Bills, Integer>, JpaSpeci
     Double getRevenueByTime(LocalDateTime timeStart, LocalDateTime timeEnd);
     @Query("SELECT COUNT(*) FROM Bills b WHERE b.user.email= :username AND (b.confirm= 0 OR b.receive_date IS NULL)")
     Long CountBill_NotConfirmOrNotReceive(@Param("username") String username);
+    @Query("SELECT COUNT(*) FROM Bills b WHERE b.receive_date IS NULL")
+    Long CountBill_NotReceive();
 }
